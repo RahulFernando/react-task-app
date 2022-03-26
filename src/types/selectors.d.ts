@@ -1,3 +1,12 @@
+interface ITaskAddSelector {
+  tasks: {
+    newTaskData: {
+      loading: boolean;
+      data: ITask;
+      error: any;
+    };
+  };
+}
 interface ITaskListSelector {
   tasks: {
     taskListData: {
@@ -15,6 +24,15 @@ interface ITaskSelectedSelector {
 interface ITaskUpdateDataSelector {
   tasks: {
     updateTaskData: {
+      loading: boolean;
+      data: any;
+      error: string;
+    };
+  };
+}
+interface ITaskDeleteDataSelector {
+  tasks: {
+    deleteTaskData: {
       loading: boolean;
       data: any;
       error: string;

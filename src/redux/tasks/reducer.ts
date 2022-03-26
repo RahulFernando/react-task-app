@@ -3,9 +3,13 @@ import {
   ADD_NEW_TASK_FAILURE,
   ADD_NEW_TASK_START,
   ADD_NEW_TASK_SUCCESS,
+  DELETE_TASK_FAILURE,
+  DELETE_TASK_START,
+  DELETE_TASK_SUCCESS,
   FETCH_TASK_LIST_FAILURE,
   FETCH_TASK_LIST_START,
   FETCH_TASK_LIST_SUCCESS,
+  RESET_DELETE_TASK,
   RESET_SELECT_TASK,
   SELECT_TASK,
   UPDATE_TASK_FAILURE,
@@ -25,6 +29,11 @@ const init = {
     error: null,
   },
   updateTaskData: {
+    loading: false,
+    data: null,
+    error: null,
+  },
+  deleteTaskData: {
     loading: false,
     data: null,
     error: null,
@@ -125,6 +134,43 @@ export default function tasks(state = init, { type, payload }: IAction) {
           data: null,
           error: payload ? payload : null,
         },
+      };
+
+    case DELETE_TASK_START:
+      return {
+        ...state,
+        deleteTaskData: {
+          ...state.deleteTaskData,
+          loading: true,
+        },
+      };
+
+    case DELETE_TASK_SUCCESS:
+      return {
+        ...state,
+        deleteTaskData: {
+          ...state.deleteTaskData,
+          loading: false,
+          data: payload,
+          error: null,
+        },
+      };
+
+    case DELETE_TASK_FAILURE:
+      return {
+        ...state,
+        deleteTaskData: {
+          ...state.deleteTaskData,
+          loading: false,
+          data: null,
+          error: payload,
+        },
+      };
+
+    case RESET_DELETE_TASK:
+      return {
+        ...state,
+        deleteTaskData: init.deleteTaskData
       };
 
     case SELECT_TASK:

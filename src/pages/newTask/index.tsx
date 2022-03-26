@@ -6,12 +6,21 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 
 // actions
-import { addNewTaskStart, fetchTaskListStart, fetchTaskListSuccess, resetSelectTask, updateTaskStart } from '../../redux/tasks/actions';
+import {
+  addNewTaskStart,
+  fetchTaskListStart,
+  fetchTaskListSuccess,
+  resetSelectTask,
+  updateTaskStart,
+} from '../../redux/tasks/actions';
 
 // components
 import Card from '../../components/card/card';
 import InputField from '../../components/inputField/inputField';
 import Button from '../../components/button/button';
+
+// hooks
+import useChange from '../../hooks/use-change';
 
 // enum
 import { BUTTON_TYPES, INPUT_TYPES } from '../../enum';
@@ -21,6 +30,11 @@ import classes from './style.module.css';
 
 const NewTask: React.FC = () => {
   const dispatch = useDispatch();
+  const { updateList } = useChange();
+
+  const newTaskData = useSelector(
+    (state: ITaskAddSelector) => state.tasks.newTaskData
+  );
 
   const selectedTask = useSelector(
     (state: ITaskSelectedSelector) => state.tasks.selectedTask
@@ -34,20 +48,24 @@ const NewTask: React.FC = () => {
     (state: ITaskListSelector) => state.tasks.taskListData.data
   );
 
-  const changeListObjectHandler = () => {
-    const tempList = [...taskList];
-    const index = tempList.findIndex((task) => task.id === selectedTask.id);
-    tempList[index] = { ...selectedTask, task: formik.values.task };
-    
-    dispatch(fetchTaskListSuccess(tempList));
-    dispatch(resetSelectTask());
-  }
-
   useEffect(() => {
     if (updateTaskData) {
-      changeListObjectHandler();
+      dispatch(
+        fetchTaskListSuccess(
+          updateList('UPDATE', taskList, selectedTask, formik.values.task)
+        )
+      );
+      dispatch(resetSelectTask());
+      formik.resetForm();
     }
-  }, [updateTaskData])
+  }, [updateTaskData]);
+
+  useEffect(() => {
+    if (newTaskData) {
+      formik.resetForm();
+      dispatch(fetchTaskListStart());
+    }
+  }, [newTaskData])
 
   const formik = useFormik({
     initialValues: {
@@ -61,7 +79,7 @@ const NewTask: React.FC = () => {
       if (selectedTask) {
         dispatch(updateTaskStart({ id: selectedTask.id, task: values.task }));
       } else {
-        dispatch(addNewTaskStart(values.task));
+        dispatch(addNewTaskStart({ task: values.task }));
       }
     },
   });

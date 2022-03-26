@@ -1,1 +1,3 @@
-export const NEW_TASK = 'NEW_TASK';
+export const ADD_NEW_TASK_START = 'ADD_NEW_TASK_START';
+export const ADD_NEW_TASK_SUCCESS = 'ADD_NEW_TASK_SUCCESS';
+export const ADD_NEW_TASK_FAILURE = 'ADD_NEW_TASK_FAILURE';

@@ -1,15 +1,17 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-// import { fetchTasksError, fetchTasksSuccess } from './actions';
-// import { FETCH_TASKS_START } from './constants';
+import { ADD_NEW_TASK_START } from './constants';
 
-const apiUrl = 'https://jsonplaceholder.typicode.com/users';
+import { addNewTaskSuccess, addNewTaskFailure } from './actions';
 
-function service() {
+const apiUrl = 'http://localhost:3001/tasks';
+
+function service(data: string) {
   return fetch(apiUrl, {
-    method: 'GET',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
+    body: JSON.stringify({ task: data })
   })
     .then((response) => response.json())
     .catch((error) => {
@@ -17,13 +19,20 @@ function service() {
     });
 }
 
-function* fetchTasks(): any {
+function* createTask({ payload }: any): any {
   try {
-    const response = yield call(() => {});
+    const response = yield call(service, payload);
+    
+    if (response) {
+      yield put(addNewTaskSuccess(response.task));
+    } else {
+      yield put(addNewTaskFailure('Something went wrong'));
+    }
   } catch (error: any) {
+    yield put(addNewTaskFailure('Something went'));
   }
 }
 
 export default function* taskSaga() {
-  yield takeEvery('FETCH_TASKS_START', fetchTasks);
+  yield takeEvery(ADD_NEW_TASK_START, createTask);
 }

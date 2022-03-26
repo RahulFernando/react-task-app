@@ -1,3 +1,4 @@
 interface ITask {
-  // TODO
+  id?: int;
+  task: string;
 }

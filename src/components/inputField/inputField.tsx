@@ -9,6 +9,7 @@ interface Props {
   error: boolean;
   helperText: string;
   autoComplete?: 'off' | 'on';
+  value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -19,6 +20,7 @@ const InputField: React.FC<Props> = ({
   error,
   helperText,
   autoComplete,
+  value,
   onChange,
 }) => {
   const complete = autoComplete === undefined ? 'on' : autoComplete;
@@ -29,6 +31,7 @@ const InputField: React.FC<Props> = ({
       type={type}
       error={error}
       label={label}
+      value={value}
       helperText={helperText}
       autoComplete={complete}
       onChange={onChange}

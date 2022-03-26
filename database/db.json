@@ -1,11 +1,11 @@
 {
   "tasks": [
     {
-      "task": "Learn all about react",
-      "id": 1
+      "id": 1,
+      "task": "All about react native"
     },
     {
-      "task": "All about reactjs",
+      "task": "All about reactJs",
       "id": 2
     }
   ]

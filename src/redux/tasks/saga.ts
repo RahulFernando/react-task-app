@@ -1,18 +1,19 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { ADD_NEW_TASK_START, FETCH_TASK_LIST_START } from './constants';
+import { ADD_NEW_TASK_START, FETCH_TASK_LIST_START, UPDATE_TASK_START } from './constants';
 
-import { addNewTaskSuccess, addNewTaskFailure, fetchTaskListSuccess, fetchTaskListFailure } from './actions';
+import { addNewTaskSuccess, addNewTaskFailure, fetchTaskListSuccess, fetchTaskListFailure, updateTaskSuccess, updateTaskFailure } from './actions';
 import { HTTP_METHODS } from '../../enum';
 
 const apiUrl = 'http://localhost:3001/tasks';
 
-function service(method: HTTP_METHODS, data?: string) {
-  return fetch(apiUrl, {
+function service(method: HTTP_METHODS, data?: any) {
+  const api = method === HTTP_METHODS.PUT ? `${apiUrl}/${data.id}` : apiUrl;
+  return fetch(api, {
     method,
     headers: {
       'Content-Type': 'application/json',
     },
-    body: data ? JSON.stringify({ task: data }) : null
+    body: data ? JSON.stringify({ task: data.task }) : null
   })
     .then((response) => response.json())
     .catch((error) => {
@@ -48,7 +49,22 @@ function* fetchTaskList(): any {
   }
 }
 
+function* updateTask({ payload }: any): any {
+  try {
+    const response = yield call(service, HTTP_METHODS.PUT, payload);
+    
+    if (response) {
+      yield put(updateTaskSuccess(response));
+    } else {
+      yield put(updateTaskFailure('Something went wrong'));
+    }
+  } catch (error: any) {
+    yield put(updateTaskFailure('Something went'));
+  }
+}
+
 export default function* taskSaga() {
   yield takeEvery(ADD_NEW_TASK_START, createTask);
   yield takeEvery(FETCH_TASK_LIST_START, fetchTaskList);
+  yield takeEvery(UPDATE_TASK_START, updateTask);
 }

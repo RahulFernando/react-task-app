@@ -1,4 +1,4 @@
-import { ADD_NEW_TASK_FAILURE, ADD_NEW_TASK_START, ADD_NEW_TASK_SUCCESS, FETCH_TASK_LIST_START, FETCH_TASK_LIST_SUCCESS, FETCH_TASK_LIST_FAILURE, SELECT_TASK } from "./constants";
+import { ADD_NEW_TASK_FAILURE, ADD_NEW_TASK_START, ADD_NEW_TASK_SUCCESS, FETCH_TASK_LIST_START, FETCH_TASK_LIST_SUCCESS, FETCH_TASK_LIST_FAILURE, SELECT_TASK, RESET_SELECT_TASK, UPDATE_TASK_START, UPDATE_TASK_SUCCESS, UPDATE_TASK_FAILURE } from "./constants";
 
 export const addNewTaskStart = (payload: string) => ({
     type: ADD_NEW_TASK_START,
@@ -31,5 +31,24 @@ export const fetchTaskListFailure = (payload: string) => ({
 
 export const selectTask = (payload: ITask) => ({
     type: SELECT_TASK,
+    payload,
+});
+
+export const resetSelectTask = () => ({
+    type: RESET_SELECT_TASK,
+});
+
+export const updateTaskStart = (payload: ITask) => ({
+    type: UPDATE_TASK_START,
+    payload,
+});
+
+export const updateTaskSuccess = (payload: ITask) => ({
+    type: UPDATE_TASK_SUCCESS,
+    payload,
+});
+
+export const updateTaskFailure = (payload: string) => ({
+    type: UPDATE_TASK_FAILURE,
     payload,
 });

@@ -7,8 +7,17 @@ interface ITaskListSelector {
     };
   };
 }
-interface ITaskSelectdSelector {
+interface ITaskSelectedSelector {
   tasks: {
     selectedTask: ITask;
+  };
+}
+interface ITaskUpdateDataSelector {
+  tasks: {
+    updateTaskData: {
+      loading: boolean;
+      data: any;
+      error: string;
+    };
   };
 }

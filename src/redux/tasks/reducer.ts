@@ -6,7 +6,11 @@ import {
   FETCH_TASK_LIST_FAILURE,
   FETCH_TASK_LIST_START,
   FETCH_TASK_LIST_SUCCESS,
+  RESET_SELECT_TASK,
   SELECT_TASK,
+  UPDATE_TASK_FAILURE,
+  UPDATE_TASK_START,
+  UPDATE_TASK_SUCCESS,
 } from './constants';
 
 const init = {
@@ -18,6 +22,11 @@ const init = {
   taskListData: {
     loading: false,
     data: [],
+    error: null,
+  },
+  updateTaskData: {
+    loading: false,
+    data: null,
     error: null,
   },
   selectedTask: null,
@@ -87,10 +96,47 @@ export default function tasks(state = init, { type, payload }: IAction) {
         },
       };
 
+    case UPDATE_TASK_START:
+      return {
+        ...state,
+        updateTaskData: {
+          ...state.updateTaskData,
+          loading: true,
+        },
+      };
+
+    case UPDATE_TASK_SUCCESS:
+      return {
+        ...state,
+        updateTaskData: {
+          ...state.updateTaskData,
+          loading: false,
+          data: payload ? payload : null,
+          error: null,
+        },
+      };
+
+    case UPDATE_TASK_FAILURE:
+      return {
+        ...state,
+        updateTaskData: {
+          ...state.updateTaskData,
+          loading: false,
+          data: null,
+          error: payload ? payload : null,
+        },
+      };
+
     case SELECT_TASK:
       return {
         ...state,
         selectedTask: payload,
+      };
+
+    case RESET_SELECT_TASK:
+      return {
+        ...state,
+        selectedTask: init.selectedTask,
       };
 
     default:

@@ -6,6 +6,7 @@ import {
   FETCH_TASK_LIST_FAILURE,
   FETCH_TASK_LIST_START,
   FETCH_TASK_LIST_SUCCESS,
+  SELECT_TASK,
 } from './constants';
 
 const init = {
@@ -19,6 +20,7 @@ const init = {
     data: [],
     error: null,
   },
+  selectedTask: null,
 };
 
 export default function tasks(state = init, { type, payload }: IAction) {
@@ -70,7 +72,7 @@ export default function tasks(state = init, { type, payload }: IAction) {
           ...state.taskListData,
           loading: false,
           data: payload ? payload : [],
-          error: null
+          error: null,
         },
       };
 
@@ -81,8 +83,14 @@ export default function tasks(state = init, { type, payload }: IAction) {
           ...state.taskListData,
           loading: false,
           data: [],
-          error: payload ? payload : null
+          error: payload ? payload : null,
         },
+      };
+
+    case SELECT_TASK:
+      return {
+        ...state,
+        selectedTask: payload,
       };
 
     default:

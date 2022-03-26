@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import List from '@mui/material/List';
 
 // actions
-import { fetchTaskListStart } from '../../redux/tasks/actions';
+import { fetchTaskListStart,selectTask } from '../../redux/tasks/actions';
 
 // components
 import TaskItem from './taskItem';
@@ -20,13 +20,17 @@ const TaskList: React.FC = () => {
     dispatch(fetchTaskListStart());
   }, []);
 
+  const taskClickHandler = (task: ITask, e: React.MouseEvent) => {
+    dispatch(selectTask(task))
+  }
+
   return (
     <Card>
       <List>
         {taskList &&
           taskList.length > 0 &&
           taskList.map((task) => (
-            <TaskItem task={task.task} onClick={(e) => {}} key={task.id} />
+            <TaskItem task={task.task} onClick={taskClickHandler.bind(null, task)} key={task.id} />
           ))}
       </List>
     </Card>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import CardContent from '@mui/material/CardContent';
@@ -22,9 +22,13 @@ import classes from './style.module.css';
 const NewTask: React.FC = () => {
   const dispatch = useDispatch();
 
+    const selectedTask = useSelector(
+    (state: ITaskSelectdSelector) => state.tasks.selectedTask
+  );
+
   const formik = useFormik({
     initialValues: {
-      task: '',
+      task: selectedTask ? selectedTask.task : '',
     },
     enableReinitialize: true,
     validationSchema: Yup.object().shape({

@@ -12,7 +12,6 @@ interface Props {
 }
 
 const TaskItem: React.FC<Props> = ({ task, onClick }) => {
-  console.log(task);
   return (
     <ListItem
       secondaryAction={

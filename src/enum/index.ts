@@ -12,3 +12,9 @@ export enum BUTTON_TYPES {
     SUBMIT = "submit",
     BUTTON = "button"
 }
+
+export enum BUTTON_COLORS {
+    PRIMARY = "primary",
+    ERROR = "error",
+    WARNING = 'warning'
+}

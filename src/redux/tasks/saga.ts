@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { fetchTasksError, fetchTasksSuccess } from './actions';
-import { FETCH_TASKS_START } from './constants';
+// import { fetchTasksError, fetchTasksSuccess } from './actions';
+// import { FETCH_TASKS_START } from './constants';
 
 const apiUrl = 'https://jsonplaceholder.typicode.com/users';
 
@@ -19,13 +19,11 @@ function service() {
 
 function* fetchTasks(): any {
   try {
-    const response = yield call();
-    yield put(fetchTasksSuccess(response));
+    const response = yield call(() => {});
   } catch (error: any) {
-    yield put(fetchTasksError(error.message));
   }
 }
 
 export default function* taskSaga() {
-  yield takeEvery(FETCH_TASKS_START, fetchTasks);
+  yield takeEvery('FETCH_TASKS_START', fetchTasks);
 }

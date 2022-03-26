@@ -1,0 +1,12 @@
+.container {
+    margin: 50px auto 20px auto;
+}
+
+.new-form {
+    display: block;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: center;
+}

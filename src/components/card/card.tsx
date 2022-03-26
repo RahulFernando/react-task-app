@@ -2,14 +2,13 @@ import React from 'react';
 import { Card as MaterialCard } from '@mui/material';
 
 interface Props {
-  minWidth?: number;
   children: React.ReactNode;
+  className?: string;
 }
 
-const Card: React.FC<Props> = ({ minWidth, children }) => {
-  const width = minWidth === undefined ? 275 : minWidth;
+const Card: React.FC<Props> = ({ children, className }) => {
   return (
-    <MaterialCard sx={{ minWidth: width }}>
+    <MaterialCard className={className}>
       {children}
     </MaterialCard>
   );

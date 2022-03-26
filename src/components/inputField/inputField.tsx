@@ -24,6 +24,7 @@ const InputField: React.FC<Props> = ({
   const complete = autoComplete === undefined ? 'on' : autoComplete;
   return (
     <TextField
+      style={{ width: '500px' }}
       name={name}
       type={type}
       error={error}

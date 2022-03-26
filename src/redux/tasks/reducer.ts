@@ -6,14 +6,10 @@ const init = {
 
 export default function tasks(state = init, { type, payload }: IAction) {
   switch (type) {
-    case :
+    case 'NEW_TASK':
       return {
-        // TODO
-      };
-
-    case :
-      return {
-        // TODO
+        ...state,
+        payload,
       };
 
     default:
